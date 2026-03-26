@@ -118,12 +118,44 @@ This repository is published as a cleaned showcase version.
 - API keys, calendar IDs, and webhook-specific private values are not included
 - some screenshots may still contain personal usage examples for demonstration purposes
 
-## Screenshots
+## Integration overview
 
-Planned additions:
+```mermaid
+flowchart TD
+    A[Clockify] -->|Webhook event| B[Google Apps Script doPost]
+    B --> C[Parse event]
+    C --> D[Match by Clockify ID]
+    D --> E[Create / Update / Delete Google Calendar event]
+    E --> F[Google Calendar]
 
-- Clockify entry example
-- corresponding Google Calendar event after sync
+    F -->|Time-driven trigger| G[Google Apps Script syncCalendarToClockify]
+    G --> H[Scan selected calendar events]
+    H --> I[Filter events without Clockify marker]
+    I --> J[Create Clockify entry]
+    J --> A
+ ```
+
+## Workflow in practice
+
+The images below show the main parts of the integration in use: the source tracking environment, the synchronized calendar view, and the deployed Apps Script execution layer.
+
+### Clockify as the tracking source
+
+Clockify is used as the primary environment for time tracking, project categorization, and manual or timer-based entry updates. These changes trigger the webhook-based Clockify → Google Calendar synchronization flow.
+
+![Clockify weekly view](docs/clockify-week-view.png)
+
+### Google Calendar as the synchronized long-term record
+
+Google Calendar is used as the long-term record and review layer. Synced entries can be routed to different calendars, formatted for readability, and reviewed in a more flexible calendar environment.
+
+![Google Calendar synced view](docs/google-calendar-week-view.png)
+
+### Apps Script execution layer
+
+The integration runs on Google Apps Script using both a webhook-driven `doPost` endpoint and a time-driven trigger for the reverse Google Calendar → Clockify synchronization path. The execution view below shows the deployed automation running in practice.
+
+![Apps Script execution log](docs/apps-script-executions.png)
 
 ## Project context
 
