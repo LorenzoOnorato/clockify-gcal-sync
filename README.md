@@ -118,23 +118,6 @@ This repository is published as a cleaned showcase version.
 - API keys, calendar IDs, and webhook-specific private values are not included
 - some screenshots may still contain personal usage examples for demonstration purposes
 
-## Integration overview
-
-```mermaid
-flowchart TD
-    A[Clockify] -->|Webhook event| B[Google Apps Script doPost]
-    B --> C[Parse event]
-    C --> D[Match by Clockify ID]
-    D --> E[Create / Update / Delete Google Calendar event]
-    E --> F[Google Calendar]
-
-    F -->|Time-driven trigger| G[Google Apps Script syncCalendarToClockify]
-    G --> H[Scan selected calendar events]
-    H --> I[Filter events without Clockify marker]
-    I --> J[Create Clockify entry]
-    J --> A
- ```
-
 ## Workflow in practice
 
 The images below show the main parts of the integration in use: the source tracking environment, the synchronized calendar view, and the deployed Apps Script execution layer.
